@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ceník malířských prací</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8f8f8; }
+    table { border-collapse: collapse; width: 100%; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+    input[type="number"] { width: 80px; }
+    tfoot td { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Ceník malířských prací – kalkulátor</h2>
+<table id="cenik">
+  <thead>
+    <tr>
+      <th>Položka</th>
+      <th>Jednotková cena (Kč)</th>
+      <th>Jednotka</th>
+      <th>Zadejte množství</th>
+      <th>Cena celkem (Kč)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Malba 1 vrstvou</td>
+      <td>45</td>
+      <td>m²</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Malba 2 vrstvami</td>
+      <td>70</td>
+      <td>m²</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Penetrace podkladu</td>
+      <td>10</td>
+      <td>m²</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Lokální opravy omítek</td>
+      <td>35</td>
+      <td>m²</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Zakrytí podlah a lišt</td>
+      <td>12</td>
+      <td>m² podlahy</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Úklid po malování</td>
+      <td>10</td>
+      <td>m² podlahy</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+    <tr>
+      <td>Demontáž zásuvek/svítidel</td>
+      <td>60</td>
+      <td>kus</td>
+      <td><input type="number" oninput="updateTotal(this)"></td>
+      <td class="total">0</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4">Celková cena (Kč)</td>
+      <td id="grandTotal">0</td>
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+  function updateTotal(input) {
+    const row = input.closest('tr');
+    const unitPrice = parseFloat(row.cells[1].innerText);
+    const quantity = parseFloat(input.value) || 0;
+    const total = unitPrice * quantity;
+    row.querySelector('.total').innerText = total.toFixed(0);
+
+    let grandTotal = 0;
+    document.querySelectorAll('.total').forEach(cell => {
+      grandTotal += parseFloat(cell.innerText) || 0;
+    });
+    document.getElementById('grandTotal').innerText = grandTotal.toFixed(0);
+  }
+</script>
+
+</body>
+</html>
